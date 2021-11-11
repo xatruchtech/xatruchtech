@@ -1,35 +1,45 @@
+import loading, { succesMsg, errorMsg } from "./Messages";
+
 const FormSubmit = () => {
   const formContainer = document.createElement('div');
 
   formContainer.classList.add('px-5');
 
-  formContainer.innerHTML += `
-    <p class="fs-2 text-white mb-4">Send me a message</p>
-  `;
+  const displayForm = document.createElement('div');
+  formContainer.appendChild(displayForm);
+
+  const title = document.createElement('p');
+  title.textContent = 'Send us your questions:';
+  title.classList.add('fs-2', 'text-white', 'mb-4');
+  displayForm.appendChild(title);
 
   const nameInp = document.createElement('input');
   nameInp.classList.add('form-control', 'my-2');
   nameInp.type = 'text';
   nameInp.placeholder = 'Enter your name here';
-  formContainer.appendChild(nameInp);
+  displayForm.appendChild(nameInp);
 
   const emailImp = document.createElement('input');
   emailImp.classList.add('form-control', 'my-2');
   emailImp.type = 'email';
   emailImp.placeholder = 'Enter your email here';
-  formContainer.appendChild(emailImp);
+  displayForm.appendChild(emailImp);
 
   const messageImp = document.createElement('textarea');
   messageImp.classList.add('form-control', 'my-2');
   messageImp.rows = '6';
   messageImp.placeholder = 'Enter your message here';
-  formContainer.appendChild(messageImp);
+  displayForm.appendChild(messageImp);
 
   const buttonInp = document.createElement('button');
-  buttonInp.classList.add('btn', 'btn-dark');
+  buttonInp.classList.add('btn', 'btn-success');
   buttonInp.type = "click";
   buttonInp.textContent = "Send Message";
-  formContainer.appendChild(buttonInp);
+  displayForm.appendChild(buttonInp);
+
+  formContainer.appendChild(loading);
+  formContainer.appendChild(succesMsg);
+  formContainer.appendChild(errorMsg);
   
   const sendInfo = async(name, email, message) => {
     await fetch('https://formspree.io/f/mayarnbz', {
@@ -40,15 +50,31 @@ const FormSubmit = () => {
         email,
         message,
       }),
-    }).then((data) => data)
-    .then((response) => {
-      console.log(response.json());
-    }).catch((err) => {
-      console.log(err);
+    }).then((data) => {
+      console.log(data);
+      switch (data.status) {
+        case 404:
+          loading.classList.add('d-none');
+          errorMsg.classList.remove('d-none');
+          break;
+        case 200:
+          loading.classList.add('d-none');
+          succesMsg.classList.remove('d-none');
+          break;
+        default:
+          loading.classList.add('d-none');
+          errorMsg.classList.remove('d-none');
+      }
+    })
+    .catch(() => {
+      loading.classList.add('d-none');
+      errorMsg.classList.remove('d-none');
     });
   };
   
   buttonInp.addEventListener('click', () => {
+    displayForm.classList.add('d-none');
+    loading.classList.remove('d-none');
     sendInfo(nameInp.value, emailImp.value, messageImp.value);
     nameInp.value = '';
     emailImp.value = '';

@@ -51,6 +51,21 @@ const activeLinks = (textlink) => {
   });
 };
 
+let mobileMenu = 0;
+
+const closeMobileNenu = () => {
+  console.log(mobileMenu);
+  if (mobileMenu === 1) {
+    navBar.classList.toggle('d-none');
+    mobileMenu = 0;
+  }
+};
+
+document.getElementById('menuIconBtn').addEventListener('click', () => {
+  mobileMenu = 1;
+  navBar.classList.toggle('d-none');
+});
+
 navBar.addEventListener('click', (event) => {
   const link = event.target;
   switch(link.textContent) {
@@ -71,8 +86,8 @@ navBar.addEventListener('click', (event) => {
       activeLinks('Contact');
       break;
     default:
-
   }
+  closeMobileNenu();
 });
 
 const formContainer = document.getElementById('formContainer');
