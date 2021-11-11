@@ -32,7 +32,7 @@ const FormSubmit = () => {
   formContainer.appendChild(buttonInp);
   
   const sendInfo = async(name, email, message) => {
-    await fetch('https://formspree.io/f/xdoyqoze', {
+    await fetch('https://formspree.io/f/mayarnbz', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
