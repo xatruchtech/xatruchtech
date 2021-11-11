@@ -10,10 +10,8 @@
 - HTML & CSS
 - Bootstrap
 - Webpack
-- Jest testing framework
 - Git and Github pages
 - VSCode
-- Linter Checkers
 
 ## Deployment Live version
 
