@@ -51,7 +51,6 @@ const FormSubmit = () => {
         message,
       }),
     }).then((data) => {
-      console.log(data);
       switch (data.status) {
         case 404:
           loading.classList.add('d-none');

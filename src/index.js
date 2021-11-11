@@ -24,7 +24,6 @@ navBar.childNodes.forEach((link) => {
       break;
     case 'Features':
       menuLinks.push(link);
-      console.log('features');
       break;
     default:
       
@@ -54,7 +53,6 @@ const activeLinks = (textlink) => {
 let mobileMenu = 0;
 
 const closeMobileNenu = () => {
-  console.log(mobileMenu);
   if (mobileMenu === 1) {
     navBar.classList.toggle('d-none');
     mobileMenu = 0;
