@@ -16,26 +16,82 @@ const FormSubmit = () => {
   const nameInp = document.createElement('input');
   nameInp.classList.add('form-control', 'my-2');
   nameInp.type = 'text';
-  nameInp.placeholder = 'Enter your name here';
+  nameInp.placeholder = 'First name and last name';
   displayForm.appendChild(nameInp);
 
   const emailImp = document.createElement('input');
   emailImp.classList.add('form-control', 'my-2');
   emailImp.type = 'email';
-  emailImp.placeholder = 'Enter your email here';
+  emailImp.placeholder = 'Email';
   displayForm.appendChild(emailImp);
 
   const messageImp = document.createElement('textarea');
   messageImp.classList.add('form-control', 'my-2');
   messageImp.rows = '6';
-  messageImp.placeholder = 'Enter your message here';
+  messageImp.placeholder = 'Message';
   displayForm.appendChild(messageImp);
 
   const buttonInp = document.createElement('button');
-  buttonInp.classList.add('btn', 'btn-success');
+  buttonInp.classList.add('btn', 'btn-dark');
   buttonInp.type = "click";
   buttonInp.textContent = "Send Message";
+  buttonInp.disabled = true;
   displayForm.appendChild(buttonInp);
+
+  const validateEmail = (email) => {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  let name = 0;
+  let email = false;
+  let message = 0;
+
+  displayForm.childNodes.forEach((child) => {
+    if (child.tagName === 'INPUT' || child.tagName === 'TEXTAREA') {
+      
+      child.addEventListener('keydown', (e) => {
+        switch(e.target.type) {
+          case 'text':
+            name = e.target.value.length;
+            if (name > 4) {
+              e.target.classList.remove('outline-red');
+            } else {
+              e.target.classList.add('outline-red');
+            }
+            break;
+          case 'email':
+            email = validateEmail(e.target.value);
+            if (email) {
+              e.target.classList.remove('outline-red');
+            } else {
+              e.target.classList.add('outline-red');
+            }
+            break;
+          case 'textarea':
+            message = e.target.value.length;
+            if (message > 10) {
+              e.target.classList.remove('outline-red');
+            } else {
+              e.target.classList.add('outline-red');
+            }
+            break;
+          default:
+
+        }
+        if (name > 4 && email && message > 10) {
+          buttonInp.disabled = false;
+          buttonInp.classList.add('btn-success');
+          buttonInp.classList.remove('btn-dark');
+        } else {
+          buttonInp.disabled = true;
+          buttonInp.classList.add('btn-dark');
+          buttonInp.classList.remove('btn-success');
+        }
+
+      });
+    }
+  });
 
   formContainer.appendChild(loading);
   formContainer.appendChild(succesMsg);

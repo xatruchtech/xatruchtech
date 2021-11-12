@@ -1487,3 +1487,7 @@ section {
 .active {
   color: rgb(255, 255, 255);
 }
+
+.outline-red {
+  box-shadow: 0 0 7px 2px red;
+}
